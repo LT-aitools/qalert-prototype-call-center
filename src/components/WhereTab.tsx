@@ -119,10 +119,34 @@ function MapTypeItem({ label, active, onClick }: { label: string; active: boolea
 
 // ─── Main component ───────────────────────────────────────────────────────────
 
-export function WhereTab({ onAddressChange }: { onAddressChange?: (a: string) => void } = {}) {
-  const [city, setCity]                       = useState('Port St. Lucie');
-  const [streetNumber, setStreetNumber]       = useState('');
-  const [streetName, setStreetName]           = useState('');
+interface WhereTabProps {
+  onAddressChange?: (a: string) => void;
+  initialAddress?: string;
+}
+
+function parseAddress(addr: string) {
+  if (!addr || addr === 'N/A') return { num: '', name: '', city: 'Port St. Lucie' };
+  const commaIdx = addr.indexOf(',');
+  const streetPart = commaIdx > -1 ? addr.slice(0, commaIdx).trim() : addr.trim();
+  const cityPart = commaIdx > -1 ? addr.slice(commaIdx + 1).trim() : '';
+  const spaceIdx = streetPart.indexOf(' ');
+  return {
+    num: spaceIdx > -1 ? streetPart.slice(0, spaceIdx) : streetPart,
+    name: spaceIdx > -1 ? streetPart.slice(spaceIdx + 1) : '',
+    city: cityPart || 'Port St. Lucie',
+  };
+}
+
+export function WhereTab({ onAddressChange, initialAddress }: WhereTabProps = {}) {
+  const parsed = parseAddress(initialAddress ?? '');
+  const hasSavedLocation = !!(initialAddress?.trim() && initialAddress !== 'N/A');
+  const initialStreetLine = hasSavedLocation
+    ? `${parsed.num} ${parsed.name}`.replace(/\s+/g, ' ').trim()
+    : '';
+
+  const [city, setCity]                       = useState(parsed.city);
+  const [streetNumber, setStreetNumber]       = useState(hasSavedLocation ? parsed.num : '');
+  const [streetName, setStreetName]           = useState(hasSavedLocation ? parsed.name : '');
   const [unitNumber, setUnitNumber]           = useState('');
   const [crossStreet, setCrossStreet]         = useState('');
   const [coordinates, setCoordinates]         = useState('N/A');
@@ -132,7 +156,7 @@ export function WhereTab({ onAddressChange }: { onAddressChange?: (a: string) =>
   const [mapTypeOpen, setMapTypeOpen]         = useState(false);
   const [overlaysOpen, setOverlaysOpen]       = useState(false);
   const [activeOverlays, setActiveOverlays]   = useState<string[]>([]);
-  const [mapSearch, setMapSearch]             = useState('');
+  const [mapSearch, setMapSearch]             = useState(initialStreetLine);
   const [pinDropped, setPinDropped]           = useState(false);
   const [pinPos, setPinPos]                   = useState({ x: 50, y: 50 });
   const [isDraggingPin, setIsDraggingPin]     = useState(false);
@@ -446,6 +470,9 @@ export function WhereTab({ onAddressChange }: { onAddressChange?: (a: string) =>
         <FormRow label="Street Name">
           <select value={streetName} onChange={e => setStreetName(e.target.value)} style={SELECT_STYLE}>
             <option value=""></option>
+            {streetName && !STREET_NAMES.includes(streetName) && (
+              <option value={streetName}>{streetName}</option>
+            )}
             {STREET_NAMES.map(s => <option key={s} value={s}>{s}</option>)}
           </select>
         </FormRow>

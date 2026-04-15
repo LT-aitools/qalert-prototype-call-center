@@ -79,10 +79,12 @@ export function QAlertApp({ trainingTarget, freePanel }: QAlertAppProps) {
   const collabRef                           = useRef<HTMLDivElement>(null);
   const [selectedType, setSelectedType]     = useState('');
   const [selectedAddress, setSelectedAddress] = useState('');
+  const [selectedComments, setSelectedComments] = useState('');
   // Keep a snapshot of the submitter for Save+Add (same person, new ticket)
   const [savedSubmitter, setSavedSubmitter] = useState<Submitter | null>(null);
   const savedFormData                       = EMPTY_FORM;
   const [activeTicket, setActiveTicket]     = useState<RelatedRequest | null>(null);
+  const [formKey, setFormKey]               = useState(0);
 
   useEffect(() => {
     const handler = () => setIsNarrow(window.innerWidth <= 1350);
@@ -108,6 +110,7 @@ export function QAlertApp({ trainingTarget, freePanel }: QAlertAppProps) {
       id: String(_nextId++),
       priority: 2,
       address: selectedAddress || 'N/A',
+      comments: selectedComments || undefined,
       lastAction: now,
       requestType: selectedType || 'N/A',
       submitter: name,
@@ -124,6 +127,7 @@ export function QAlertApp({ trainingTarget, freePanel }: QAlertAppProps) {
     setSubmitter(null);
     setSelectedType('');
     setSelectedAddress('');
+    setSelectedComments('');
     setFormTab('who');
   }
 
@@ -133,6 +137,7 @@ export function QAlertApp({ trainingTarget, freePanel }: QAlertAppProps) {
     setActiveTicket(ticket);
     setMainTab('details');
     setFormTab('who');
+    setFormKey(k => k + 1);
     const sid = resolveSubmitterIdForTicket(ticket);
     if (sid) {
       const found = mockSubmitters.find(s => s.id === sid) ?? null;
@@ -146,6 +151,7 @@ export function QAlertApp({ trainingTarget, freePanel }: QAlertAppProps) {
     }
     setSelectedType(ticket.requestType);
     setSelectedAddress(ticket.address);
+    setSelectedComments(ticket.comments ?? '');
   }
 
   // Apply saved submitter for Save+Add (runs after savedSubmitter/savedFormData update)
@@ -203,7 +209,14 @@ export function QAlertApp({ trainingTarget, freePanel }: QAlertAppProps) {
       {/* ── Toolbar — lighter bg, taller, T3 text, charcoal color ── */}
       <div style={{ backgroundColor: TOOLBAR_BG, height: '36px', display: 'flex', alignItems: 'center', flexShrink: 0, borderBottom: GREY_LINE }}>
         <button
-          onClick={() => { setFormData(EMPTY_FORM); setSubmitter(null); setFormTab('who'); }}
+          onClick={() => {
+            setFormData(EMPTY_FORM);
+            setSubmitter(null);
+            setFormTab('who');
+            setSelectedType('');
+            setSelectedAddress('');
+            setSelectedComments('');
+          }}
           style={{ display: 'flex', alignItems: 'center', gap: '5px', padding: '0 12px', height: '100%', fontSize: T2, color: '#333', background: 'none', border: 'none', cursor: 'pointer', whiteSpace: 'nowrap' }}
         >
           <img src={`${BASE}icons/add-new-request.gif`} alt="+" style={{ height: '20px' }} /> New Request
@@ -361,8 +374,21 @@ export function QAlertApp({ trainingTarget, freePanel }: QAlertAppProps) {
                 onFormDataChange={setFormData}
               />
             )}
-            {formTab === 'what' && <WhatTab onTypeChange={setSelectedType} />}
-            {formTab === 'where' && <WhereTab onAddressChange={setSelectedAddress} />}
+            {formTab === 'what' && (
+              <WhatTab
+                key={`what-${formKey}`}
+                onTypeChange={setSelectedType}
+                initialType={selectedType}
+                initialComments={selectedComments}
+              />
+            )}
+            {formTab === 'where' && (
+              <WhereTab
+                key={`where-${formKey}`}
+                onAddressChange={setSelectedAddress}
+                initialAddress={selectedAddress}
+              />
+            )}
             {formTab === 'more' && <FilesTab />}
             {formTab !== 'who' && formTab !== 'what' && formTab !== 'where' && formTab !== 'more' && (
               <div style={{ padding: '14px', color: '#aaa', fontSize: T4 }}>

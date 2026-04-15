@@ -50,6 +50,7 @@ export interface RelatedRequest {
   id: string;
   priority: number;
   address: string;
+  comments?: string;
   lastAction: string;
   requestType: string;
   submitter: string;
