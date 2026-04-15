@@ -152,7 +152,7 @@ export function QAlertApp({ trainingTarget, freePanel }: QAlertAppProps) {
     setSelectedType(ticket.requestType);
     setSelectedAddress(ticket.address);
     const commentText = ticket.comments?.trim()
-      || `Caller reported issue at ${ticket.address}. Last activity ${ticket.lastAction}. (Request #${ticket.id})`;
+      || `Caller reported issue at ${ticket.address}. Service Request #${ticket.id} was opened for follow-up.`;
     setSelectedComments(commentText);
   }
 

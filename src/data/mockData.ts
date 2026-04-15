@@ -156,6 +156,22 @@ export const mockRelatedRequests: RelatedRequest[] = [
   },
 ];
 
+function buildSearchComment(ticket: RelatedRequest): string {
+  const statusLine =
+    ticket.status === 'Open'
+      ? 'Request is open and waiting for department response.'
+      : ticket.status === 'In Progress'
+        ? 'Department has acknowledged and is actively working this case.'
+        : ticket.status === 'On Hold'
+          ? 'Request is currently on hold pending additional review.'
+          : 'Request has been completed and closed.';
+  return [
+    `Resident called about ${ticket.requestType.toLowerCase()} at ${ticket.address}.`,
+    `Service Request #${ticket.id} routed to ${ticket.routedTo}.`,
+    statusLine,
+  ].join(' ');
+}
+
 // Full searchable ticket database for Request Search tab
 export const mockSearchTickets: RelatedRequest[] = [
   { id: '164677', priority: 1, address: '782 SW Deacon Dr, Port St. Lucie',        lastAction: '4/14/2026 9:17P',  requestType: 'Swale Rework',        submitter: 'Michael Brown',   createdOn: '4/14/2026 9:12P',  routedTo: 'TNorris',                   status: 'Open',        dept: 'Public Works',    origin: 'Call Center', submitterId: '10' },
@@ -184,7 +200,7 @@ export const mockSearchTickets: RelatedRequest[] = [
   { id: '164817', priority: 2, address: '228 SE Crossroads Pkwy, Port St. Lucie',  lastAction: '4/15/2026 7:12A',  requestType: 'Culvert',             submitter: 'Mary Doe',        createdOn: '4/15/2026 7:08A',  routedTo: 'TNorris',                   status: 'On Hold',     dept: 'Public Works',    origin: 'Call Center', submitterId: '7'  },
   { id: '164816', priority: 2, address: '9140 SW Orchid Isle Dr, Port St. Lucie',  lastAction: '4/15/2026 6:55A',  requestType: 'Swale',               submitter: 'Jane Doe',        createdOn: '4/15/2026 6:50A',  routedTo: 'r.sanchezlopez',            status: 'Closed',      dept: 'Public Works',    origin: 'Online',      submitterId: '1'  },
   { id: '555555', priority: 2, address: '248 SW Glenwood Dr, Port St. Lucie',      lastAction: '4/1/2026 10:00A',  requestType: 'Pothole',             submitter: 'Jane Doe',        createdOn: '4/1/2026 9:55A',   routedTo: 'kevin.marshall',            status: 'Closed',      dept: 'Public Works',    origin: 'Call Center', submitterId: '1'  },
-];
+].map((ticket) => ({ ...ticket, comments: buildSearchComment(ticket) }));
 
 export const mockRequestTypes: RequestType[] = [
   { id: 'a-info',       label: 'A Info/Alerta',                          department: 'Call Center' },
