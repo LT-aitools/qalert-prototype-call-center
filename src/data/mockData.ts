@@ -157,18 +157,16 @@ export const mockRelatedRequests: RelatedRequest[] = [
 ];
 
 function buildSearchComment(ticket: RelatedRequest): string {
-  const statusLine =
-    ticket.status === 'Open'
-      ? 'Request is open and waiting for department response.'
-      : ticket.status === 'In Progress'
-        ? 'Department has acknowledged and is actively working this case.'
-        : ticket.status === 'On Hold'
-          ? 'Request is currently on hold pending additional review.'
-          : 'Request has been completed and closed.';
+  const urgencyLine =
+    ticket.priority === 1
+      ? 'Resident said this is urgent and asked for prompt follow-up.'
+      : ticket.priority === 2
+        ? 'Resident requested an update once the city has reviewed the issue.'
+        : 'Resident shared this as a lower-priority concern but would like it documented.';
   return [
     `Resident called about ${ticket.requestType.toLowerCase()} at ${ticket.address}.`,
-    `Service Request #${ticket.id} routed to ${ticket.routedTo}.`,
-    statusLine,
+    `Caller noted the issue started before ${ticket.createdOn}.`,
+    urgencyLine,
   ].join(' ');
 }
 
