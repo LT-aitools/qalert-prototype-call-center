@@ -9,6 +9,8 @@ interface WhoTabProps {
   onFormDataChange: (data: Partial<Submitter>) => void;
 }
 
+const BASE = import.meta.env.BASE_URL;
+
 const BORDER        = '1px solid #c8d0d8';
 const BORDER_LOCKED = '1px solid #d8dde3';
 const T2 = '14px';
@@ -137,14 +139,14 @@ export function WhoTab({ submitter, onSubmitterChange, formData, onFormDataChang
                 onClick={() => handleSearch(searchQuery)}
                 style={{ position: 'absolute', right: '3px', top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', padding: '0', cursor: 'pointer', display: 'flex', alignItems: 'center' }}
               >
-                <img src="/icons/search.png" alt="Search" style={{ height: '12px', opacity: 0.7 }} />
+                <img src={`${BASE}icons/search.png`} alt="Search" style={{ height: '12px', opacity: 0.7 }} />
               </button>
             </div>
 
             {/* Pencil — dimmed until a submitter is loaded */}
-            <ImgBtn src="/icons/pencil.gif" alt="Edit" onClick={handlePencilClick} dimmed={noneSelected} />
+            <ImgBtn src={`${BASE}icons/pencil.gif`} alt="Edit" onClick={handlePencilClick} dimmed={noneSelected} />
             {/* X — dimmed until a submitter is loaded; triggers confirm dialog */}
-            <ImgBtn src="/icons/cancel.gif" alt="Clear" onClick={handleClearClick} dimmed={noneSelected} />
+            <ImgBtn src={`${BASE}icons/cancel.gif`} alt="Clear" onClick={handleClearClick} dimmed={noneSelected} />
 
             {/* Dropdown */}
             {showDropdown && searchResults.length > 0 && (

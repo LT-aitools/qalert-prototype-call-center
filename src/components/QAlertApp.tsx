@@ -27,6 +27,8 @@ const EMPTY_FORM: Partial<Submitter> = {
 type MainTab = 'details' | 'search';
 type RelatedView = 'list' | 'map';
 
+const BASE = import.meta.env.BASE_URL;
+
 const NAV_BG    = '#1a3a5c';
 const NAV_DARK  = '#0d2137';
 const TOOLBAR_BG = '#eaecef';   // lighter grey
@@ -192,10 +194,10 @@ export function QAlertApp({ trainingTarget, freePanel }: QAlertAppProps) {
         </div>
         <div style={{ display: 'flex', alignItems: 'center', padding: '0 10px', gap: '5px' }}>
           <span style={{ color: '#b0c4d8', fontSize: T4, marginRight: '6px' }}>charlottelau</span>
-          <img src="/icons/pushpin.png"         alt="pin"     style={{ height: '15px', opacity: 0.8 }} />
-          <img src="/icons/help.png"            alt="help"    style={{ height: '15px', opacity: 0.8 }} />
-          <img src="/icons/contact-support.png" alt="support" style={{ height: '15px', opacity: 0.8 }} />
-          <img src="/icons/academy.png"         alt="academy" style={{ height: '15px', opacity: 0.8 }} />
+          <img src={`${BASE}icons/pushpin.png`}         alt="pin"     style={{ height: '15px', opacity: 0.8 }} />
+          <img src={`${BASE}icons/help.png`}            alt="help"    style={{ height: '15px', opacity: 0.8 }} />
+          <img src={`${BASE}icons/contact-support.png`} alt="support" style={{ height: '15px', opacity: 0.8 }} />
+          <img src={`${BASE}icons/academy.png`}         alt="academy" style={{ height: '15px', opacity: 0.8 }} />
         </div>
       </div>
 
@@ -205,7 +207,7 @@ export function QAlertApp({ trainingTarget, freePanel }: QAlertAppProps) {
           onClick={() => { setFormData(EMPTY_FORM); setSubmitter(null); setFormTab('who'); }}
           style={{ display: 'flex', alignItems: 'center', gap: '5px', padding: '0 12px', height: '100%', fontSize: T2, color: '#333', background: 'none', border: 'none', cursor: 'pointer', whiteSpace: 'nowrap' }}
         >
-          <img src="/icons/add-new-request.gif" alt="+" style={{ height: '20px' }} /> New Request
+          <img src={`${BASE}icons/add-new-request.gif`} alt="+" style={{ height: '20px' }} /> New Request
         </button>
         <TBtn img="save.png"        label="Save"          onClick={handleSave}      disabled={!selectedType} />
         <TBtn img="save-close.png"  label="Save + Close"  onClick={handleSaveClose}  disabled={!selectedType} />
@@ -318,7 +320,7 @@ export function QAlertApp({ trainingTarget, freePanel }: QAlertAppProps) {
                   }}
                 >
                   {t.label}
-                  {t.warning && <img src="/icons/warning.gif" alt="!" style={{ height: '12px', marginLeft: '2px' }} />}
+                  {t.warning && <img src={`${BASE}icons/warning.gif`} alt="!" style={{ height: '12px', marginLeft: '2px' }} />}
                 </button>
               );
             })}
@@ -476,7 +478,7 @@ function TBtn({ img, label, disabled = false, onClick, borderRight }: {
 }) {
   return (
     <button onClick={onClick} disabled={disabled} style={{ display: 'flex', alignItems: 'center', gap: '5px', padding: '0 12px', height: '100%', fontSize: T2, color: disabled ? '#aab' : '#444', background: 'none', border: 'none', borderRight: borderRight ? `1px solid ${SEP_COLOR}` : undefined, cursor: disabled ? 'default' : 'pointer', whiteSpace: 'nowrap', opacity: disabled ? 0.55 : 1 }}>
-      <img src={`/icons/${img}`} alt="" style={{ height: '20px' }} /> {label}
+      <img src={`${BASE}icons/${img}`} alt="" style={{ height: '20px' }} /> {label}
     </button>
   );
 }

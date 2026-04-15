@@ -3,6 +3,8 @@ import { RefreshCwIcon } from 'lucide-react';
 import type { RelatedRequest } from '../types/qalert';
 import { mockSearchTickets } from '../data/mockData';
 
+const BASE = import.meta.env.BASE_URL;
+
 const NAV_BG   = '#1a3a5c';
 const BORDER   = '1px solid #c8d0d8';
 const T3       = '12px';
@@ -91,7 +93,7 @@ export function RequestSearchTab({ onOpenTicket }: Props) {
         {/* Search / Reset / Save row */}
         <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', gap: '14px', marginBottom: '14px' }}>
           <button onClick={handleSearch} style={{ display: 'flex', alignItems: 'center', gap: '5px', background: 'none', border: 'none', cursor: 'pointer', fontSize: T3, fontWeight: 600, color: '#333' }}>
-            <img src="/icons/search.png" alt="" style={{ height: '14px', opacity: 0.7 }} />
+            <img src={`${BASE}icons/search.png`} alt="" style={{ height: '14px', opacity: 0.7 }} />
             Search
           </button>
           <button onClick={handleReset} style={{ display: 'flex', alignItems: 'center', gap: '5px', background: 'none', border: 'none', cursor: 'pointer', fontSize: T3, fontWeight: 600, color: '#333' }}>
@@ -99,7 +101,7 @@ export function RequestSearchTab({ onOpenTicket }: Props) {
             Reset
           </button>
           <button style={{ display: 'flex', alignItems: 'center', gap: '5px', background: 'none', border: 'none', cursor: 'pointer', fontSize: T3, fontWeight: 600, color: '#333' }}>
-            <img src="/icons/save.png" alt="" style={{ height: '14px', opacity: 0.7 }} />
+            <img src={`${BASE}icons/save.png`} alt="" style={{ height: '14px', opacity: 0.7 }} />
             Save
           </button>
         </div>

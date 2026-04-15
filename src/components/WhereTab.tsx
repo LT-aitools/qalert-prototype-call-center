@@ -1,5 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 
+const BASE = import.meta.env.BASE_URL;
+
 const BORDER    = '1px solid #c8d0d8';
 const T3        = '12px';
 const T4        = '11px';
@@ -23,7 +25,7 @@ const PIN_LOCATION = {
 };
 
 // Street view photo — save the screenshot to public/streetview-psl.jpg
-const STREET_VIEW_IMG = '/streetview-psl.jpg';
+const STREET_VIEW_IMG = `${BASE}streetview-psl.jpg`;
 const STREET_VIEW_ADDR = '271 SW Statler Ave';
 const STREET_VIEW_CITY = 'Port St. Lucie, Florida';
 
@@ -220,7 +222,7 @@ export function WhereTab({ onAddressChange }: { onAddressChange?: (a: string) =>
               style={{ ...INPUT_STYLE, paddingRight: '28px' }}
             />
             <img
-              src="/icons/search.png"
+              src={`${BASE}icons/search.png`}
               alt="search"
               style={{ position: 'absolute', right: '7px', top: '50%', transform: 'translateY(-50%)', width: '14px', height: '14px', opacity: 0.55, pointerEvents: 'none' }}
             />
@@ -241,7 +243,7 @@ export function WhereTab({ onAddressChange }: { onAddressChange?: (a: string) =>
             }}
           >
             <img
-              src="/icons/pushpin.png"
+              src={`${BASE}icons/pushpin.png`}
               alt="Drop pin"
               draggable={false}
               style={{ height: '22px', width: 'auto', display: 'block', pointerEvents: 'none' }}
@@ -353,7 +355,7 @@ export function WhereTab({ onAddressChange }: { onAddressChange?: (a: string) =>
             >
               {/* img must NOT be draggable — only the div drags */}
               <img
-                src="/icons/pegman.png"
+                src={`${BASE}icons/pegman.png`}
                 alt="Street View"
                 draggable={false}
                 style={{ width: '32px', display: 'block', pointerEvents: 'none' }}
@@ -364,7 +366,7 @@ export function WhereTab({ onAddressChange }: { onAddressChange?: (a: string) =>
           {/* Dropped pushpin marker */}
           {pinDropped && (
             <img
-              src="/icons/pushpin.png"
+              src={`${BASE}icons/pushpin.png`}
               alt="pin"
               style={{
                 position: 'absolute', left: `${pinPos.x}%`, top: `${pinPos.y}%`,
