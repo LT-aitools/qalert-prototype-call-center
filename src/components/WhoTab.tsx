@@ -340,10 +340,7 @@ function PieChart({ pct }: { pct: number }) {
   // Grey background slice (open %)
   const startX = cx;
   const startY = cy - r;
-  const openAngle = ((100 - pct) / 100) * 2 * Math.PI;
-  const ox = cx + r * Math.sin(openAngle);
-  const oy = cy - r * Math.cos(openAngle);
-  const openLarge = (100 - pct) > 50 ? 1 : 0;
+  // openAngle, ox, oy, openLarge kept for reference but grey slice drawn as full circle
 
   return (
     <svg width="80" height="80" viewBox="0 0 80 80">

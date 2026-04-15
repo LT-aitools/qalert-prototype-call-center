@@ -36,7 +36,6 @@ const GREY_LINE  = '1px solid #c8d0d8';
 // Font tiers
 const T1 = '15px'; // nav + toolbar labels
 const T2 = '14px'; // section headings (Notif Prefs, Related Info, Submitter Stats)
-const T3 = '12px'; // field labels (First Name, Address, tab labels, sub-header)
 const T4 = '11px'; // standard body text (table rows, pagination, filters)
 
 function formatDateTime(d: Date): string {
@@ -471,9 +470,6 @@ export function QAlertApp({ trainingTarget, freePanel }: QAlertAppProps) {
   );
 }
 
-function Sep() {
-  return <span style={{ color: SEP_COLOR, fontSize: '16px', userSelect: 'none', flexShrink: 0 }}>|</span>;
-}
 
 function TBtn({ img, label, disabled = false, onClick, borderRight }: {
   img: string; label: string; disabled?: boolean; onClick?: () => void; borderRight?: boolean;
