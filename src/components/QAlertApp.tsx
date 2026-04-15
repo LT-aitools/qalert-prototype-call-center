@@ -193,7 +193,7 @@ export function QAlertApp({ trainingTarget, freePanel }: QAlertAppProps) {
           })}
         </div>
         <div style={{ display: 'flex', alignItems: 'center', padding: '0 10px', gap: '5px' }}>
-          <span style={{ color: '#b0c4d8', fontSize: T4, marginRight: '6px' }}>charlottelau</span>
+          <span style={{ color: '#b0c4d8', fontSize: T4, marginRight: '6px' }}>jordanlee</span>
           <img src={`${BASE}icons/pushpin.png`}         alt="pin"     style={{ height: '15px', opacity: 0.8 }} />
           <img src={`${BASE}icons/help.png`}            alt="help"    style={{ height: '15px', opacity: 0.8 }} />
           <img src={`${BASE}icons/contact-support.png`} alt="support" style={{ height: '15px', opacity: 0.8 }} />
