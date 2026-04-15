@@ -151,7 +151,9 @@ export function QAlertApp({ trainingTarget, freePanel }: QAlertAppProps) {
     }
     setSelectedType(ticket.requestType);
     setSelectedAddress(ticket.address);
-    setSelectedComments(ticket.comments ?? '');
+    const commentText = ticket.comments?.trim()
+      || `Caller reported issue at ${ticket.address}. Last activity ${ticket.lastAction}. (Request #${ticket.id})`;
+    setSelectedComments(commentText);
   }
 
   // Apply saved submitter for Save+Add (runs after savedSubmitter/savedFormData update)
